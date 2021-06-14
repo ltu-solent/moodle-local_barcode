@@ -73,7 +73,7 @@ class submission_updated extends \mod_assign\event\submission_updated {
      */
     protected function init() {
         parent::init();
-        $this->data['objecttable'] = 'assignsubmission_physical';
+        $this->data['objecttable'] = 'assignsubmission_barcode';
     }
 
     /**
@@ -81,6 +81,6 @@ class submission_updated extends \mod_assign\event\submission_updated {
      * @return array The database table and restore type as an array
      */
     public static function get_objectid_mapping() {
-        return array('db' => 'assignsubmission_physical', 'restore' => \core\event\base::NOT_MAPPED);
+        return array('db' => 'assignsubmission_barcode', 'restore' => \core\event\base::NOT_MAPPED);
     }
 }

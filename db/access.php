@@ -15,20 +15,25 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Local barcode webservice plugin
+ * Capability definitions for this module.
  *
- * @package   local_barcode
+ * @package   assignsubmission_physical
  * @copyright 2018 onwards Catalyst IT {@link http://www.catalyst-eu.net/}
  * @author    Dez Glidden <dez.glidden@catalyst-eu.net>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
+defined('MOODLE_INTERNAL') || die('Direct access to this script is forbidden.');
 
-$plugin->version   = 2020013000;
-$plugin->requires  = 2017111300; // Moodle 3.4.
-$plugin->cron      = 0;
-$plugin->component = 'local_barcode';
-$plugin->maturity  = MATURITY_BETA;
-$plugin->release   = '1.0.0';
-// $plugin->dependencies = array('assignsubmission_physical' => ANY_VERSION);
+$capabilities = array(
+    'assignsubmission/barcode:scan' => array(
+        'captype'      => 'read',
+        'contextlevel' => CONTEXT_MODULE,
+        'archetypes'   => array(
+            'editingteacher' => CAP_ALLOW,
+            'teacher'        => CAP_ALLOW,
+            'coursecreator'  => CAP_ALLOW,
+            'manager'        => CAP_ALLOW
+        )
+    ),
+);

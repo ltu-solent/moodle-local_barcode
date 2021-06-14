@@ -95,7 +95,7 @@ class local_barcode_external extends external_api {
             $data->id = $record->cmid;
             list($data->course, $data->cm) = get_course_and_cm_from_instance($record->assignmentid, 'assign');
             $data->context = context_module::instance($record->cmid);
-            $data->assign = new local_barcode\barcode_assign($data->context, $data->cm, $data->course);
+            $data->assign = new barcode_assign($data->context, $data->cm, $data->course);
             $data->user = $DB->get_record('user', array('id' => $record->userid), '*', IGNORE_MISSING);
             $data->isopen = $data->assign->student_submission_is_open($data->user->id, false, false, false);
             $data->submissiontime = ($data->submitontime === '1') ? $record->duedate : time();
@@ -104,15 +104,11 @@ class local_barcode_external extends external_api {
             $response['data']['course']                = $record->course;
             $response['data']['studentname']           = $record->firstname . ' ' . $record->lastname;
             $response['data']['participantid']         = $record->participantid;
+            $response['data']['duedate']               = date('jS F, \'y G:i', $record->duedate);
             $response['data']['submissiontime']        = date('jS F, \'y G:i:s', $data->submissiontime);
             $response['data']['assignmentdescription'] = strip_tags($record->assignmentdescription);
-            if ($record->duedate !== '0') {
-                $response['data']['islate'] = (($record->duedate - time()) < 0) ? 1 : 0;
-                $response['data']['duedate'] = date('jS F, \'y G:i', $record->duedate);
-            } else {
-                $response['data']['islate'] = 0;
-                $response['data']['duedate'] = '-';
-            }
+            $timestamp = time();
+            $response['data']['islate']                = (($record->duedate - $timestamp) < 0) ? 1 : 0;
 
             // Get the username details.
 
@@ -143,10 +139,10 @@ class local_barcode_external extends external_api {
                 // Email user.
                 $data->emaildata = local_barcode_get_email_data($data);
                 // If group assignment then create a task to send each member a reverted to draft email.
-                if ($data->groupid !== '0') {
+                if ($record->groupid !== '0') {
                     $emailgroupmembers = new local_barcode\task\email_group_revert_to_draft();
                     $emailgroupmembers->set_custom_data($data);
-                    \core\task\manager::queue_adhoc_task($emailgroupmembers);
+                     \core\task\manager::queue_adhoc_task($emailgroupmembers);
                 } else {
                     $data->assign->send_student_revert_to_draft_email($data);
                 }
@@ -188,9 +184,9 @@ class local_barcode_external extends external_api {
     public static function save_barcode_submission_parameters() {
         return new external_function_parameters(
             array(
-                'barcode' => new external_value(PARAM_TEXT, 'barcode'),
-                'revert'  => new external_value(PARAM_TEXT, 'revert'),
-                'ontime'  => new external_value(PARAM_TEXT, 'ontime'),
+                'barcode' => new external_value(PARAM_NOTAGS, 'barcode'),
+                'revert'  => new external_value(PARAM_NOTAGS, 'revert'),
+                'ontime'  => new external_value(PARAM_NOTAGS, 'ontime'),
             )
         );
     }

@@ -25,11 +25,11 @@
 require_once('../../../config.php');
 require_once($CFG->dirroot . '/lib/pagelib.php');
 require_once($CFG->dirroot . '/mod/assign/locallib.php');
-require_once($CFG->dirroot . '/local/barcode/barcode_submission_form.php');
-require_once($CFG->dirroot . '/local/barcode/classes/barcode_assign.php');
-require_once($CFG->dirroot . '/local/barcode/classes/event/submission_updated.php');
-require_once($CFG->dirroot . '/local/barcode/classes/task/email_group.php');
-require_once($CFG->dirroot . '/local/barcode/locallib.php');
+require_once('../barcode_submission_form.php');
+require_once('../classes/barcode_assign.php');
+require_once('../classes/event/submission_updated.php');
+require_once('../classes/task/email_group.php');
+require_once('../locallib.php');
 
 $context = context_system::instance();
 $id      = $context->id;
@@ -61,7 +61,7 @@ if ($mform->is_cancelled()) {
 } elseif ($data->formdata = $mform->get_submitted_data()) {
     // Process the barcode & submission.
     $conditions = array('barcode' => $data->formdata->barcode);
-    $data->barcoderecord = $DB->get_record('assignsubmission_physical', $conditions, '*', IGNORE_MISSING);
+    $data->barcoderecord = $DB->get_record('assignsubmission_barcode', $conditions, '*', IGNORE_MISSING);
     list($data->course, $data->cm) = get_course_and_cm_from_instance($data->barcoderecord->assignmentid, 'assign');
     $data->context          = context_module::instance($data->barcoderecord->cmid);
     $data->id               = $data->barcoderecord->cmid;

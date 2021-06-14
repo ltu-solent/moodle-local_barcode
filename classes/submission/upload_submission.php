@@ -23,9 +23,13 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace local_barcode\submission;
+// namespace local_barcode\submission;
+
 
 defined('MOODLE_INTERNAL') || die();
+
+
+require_once($CFG->dirroot . '/local/barcode/externallib.php');
 
 /**
  * Upload physical submission via a web service
@@ -96,18 +100,40 @@ class upload_submission {
         return $DB->get_field_sql($sql, array('Barcode Scanning'), IGNORE_MULTIPLE);
     }
 
+    function get_due_date() {
+      global $DB;
+
+      $sql = 'SELECT a.duedate
+                FROM {assign} a
+                JOIN {assignsubmission_barcode} b ON b.assignmentid = a.id
+               WHERE b.barcode = ?';
+
+      return $DB->get_field_sql($sql, array($this->barcode), IGNORE_MULTIPLE);
+    }
+
 
     /**
-     * Save the barcode submission in the database
+     * Save the barcode submission in the database and echo the data
      *
      * @return object   Status object confirming either 200 or 404
      */
     public function save_submission() {
-        header('Content-Type: text/plain');
-        $serverurl = $this->domainname . '/webservice/xmlrpc/server.php'. '?wstoken=' . $this->token;
-        $curl = new \curl;
-        $post = xmlrpc_encode_request($this->functionname, array($this->barcode, $this->revert, $this->ontime));
-        $resp = xmlrpc_decode($curl->post($serverurl, $post));
+
+        $data = local_barcode_external::save_barcode_submission($this->barcode, $this->revert, $this->ontime);
+
+        $resp = new stdClass();
+        $resp->code = $data['data']['code'];
+        $resp->message = $data['data']['message'];
+        $resp->assignment = $data['data']['assignment'];
+        $resp->assignmentdescription = "";
+        $resp->course = $data['data']['course'];
+        $resp->duedate = date("F j, Y, g:i a", ($this->get_due_date()));
+        $resp->idformat = "Student ID";
+        $resp->studentid = $data['data']['studentid'];
+        $resp->studentname = $data['data']['studentname'];
+        $resp->submissiontime = date("F j, Y, g:i a");
+        $resp->islate = $this->ontime;
+        $resp->reverted = $this->revert;
 
         echo json_encode($resp);
     }

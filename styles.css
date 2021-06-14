@@ -65,28 +65,19 @@
   }
 }
 
-.local-barcode-success:after,
-.local-barcode-fail:after,
-.local-barcode-revert:after {
-  position: absolute;
-  top: 10px;
-  right: 38px;
-  content: ' ';
-  width: 24px;
-  height: 24px;
-  padding-right: 6px;
-}
-
-.local-barcode-success:after {
+.bc-success {
   background: url([[pix:local_barcode|local-barcode-success]]) no-repeat;
+  background-position: center;
 }
 
-.local-barcode-fail:after {
+.bc-fail {
   background: url([[pix:local_barcode|local-barcode-fail]]) no-repeat;
+  background-position: center;
 }
 
-.local-barcode-revert:after {
+.bc-revert {
   background: url([[pix:local_barcode|local-barcode-revert]]) no-repeat;
+  background-position: center;
 }
 
 .local-barcode-islate {
