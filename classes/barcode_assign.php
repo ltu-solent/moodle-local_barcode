@@ -205,14 +205,14 @@ class barcode_assign extends assign {
         if (!$user = $DB->get_record('user', array('id' => $data->user->id), '*', MUST_EXIST)) {
             return;
         }
-
-        // Late submission check.
-        $late = $this->get_instance()->duedate && ($this->get_instance()->duedate < $submission->timemodified);
-
-        if (!$this->get_instance()->sendnotifications && !($late && $this->get_instance()->sendlatenotifications)) {
-            return;
-        }
-
+// SU_AMEND START - Barcode: Late date check preventing notifications
+        // Late submission check. BROKEN!!
+        // $late = $this->get_instance()->duedate && ($this->get_instance()->duedate < $submission->timemodified);
+        //
+        // if (!$this->get_instance()->sendnotifications && !($late && $this->get_instance()->sendlatenotifications)) {
+        //     return;
+        // }
+// SU_AMEND END
         // If notifications have to be sent to the graders then send the notification.
         if ($this->get_instance()->sendnotifications) {
             if ($notifyusers = $this->get_notifiable_users($data)) {
@@ -255,13 +255,15 @@ class barcode_assign extends assign {
         $email->subject         = get_string('reverttodraftemailsubject', 'local_barcode');
         $email->fullmessage     = get_string('reverttodraftemailnonhtml',
                                     'local_barcode',
-                                    ['linkurl' => $data->emaildata->linkurl, 'linktext' => $data->emaildata->linktext]);
+                                    ['timecreated'=>userdate($data->submissiontime, '%d %B %Y, %I:%M:%S %p') , 'linkurl' => $data->emaildata->linkurl, 'linktext' => $data->emaildata->linktext]);
         $email->fullmessagehtml = '<p>' .
                                   get_string('reverttodraftemail',
                                     'local_barcode',
-                                    ['linkurl' => $data->emaildata->linkurl, 'linktext' => $data->emaildata->linktext]) .
+                                    ['timecreated'=>userdate($data->submissiontime, '%d %B %Y, %I:%M:%S %p') , 'linkurl' => $data->emaildata->linkurl, 'linktext' => $data->emaildata->linktext]) .
                                   '</p>';
-        email_to_user($email->userto, $email->userfrom, $email->subject, $email->fullmessage, $email->fullmessagehtml, '', '');
+// SU_AMEND START - Barcode: Prevent revert to draft email
+        //email_to_user($email->userto, $email->userfrom, $email->subject, $email->fullmessage, $email->fullmessagehtml, '', '');
+// SU_AMEND END
     }
 
 

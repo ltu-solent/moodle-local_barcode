@@ -3,7 +3,7 @@ define(['jquery', 'core/str'], function($, str) {
     var cmid,
         link,
         code,
-        message = '',
+        message    = '',
         assignment = '-',
         assignmentdescription = '',
         course,
@@ -31,20 +31,19 @@ define(['jquery', 'core/str'], function($, str) {
         var cancelbutton = document.getElementById('id_cancel');
         cancelbutton.value = "Finish";
         // Removed as it's confusing when submissions are reverted to draft
-        // addCombinedCountElement();
+//        addCombinedCountElement();
 
         var langStrings = str.get_strings([
-            { key: 'assignmentdetails', component: 'local_barcode' },
-            { key: 'barcodes', component: 'local_barcode' },
-            { key: 'draft', component: 'local_barcode' },
-            { key: 'draftandsubmissionerror', component: 'local_barcode' },
-            { key: 'due', component: 'local_barcode' },
-            { key: 'notsubmitted', component: 'local_barcode' },
-            { key: 'scanned', component: 'local_barcode' },
-            { key: 'student', component: 'local_barcode' },
-            { key: 'submitted', component: 'local_barcode' }
+            {key: 'assignmentdetails', component: 'local_barcode'},
+            {key: 'barcodes', component: 'local_barcode'},
+            {key: 'draft', component: 'local_barcode'},
+            {key: 'draftandsubmissionerror', component: 'local_barcode'},
+            {key: 'due', component: 'local_barcode'},
+            {key: 'notsubmitted', component: 'local_barcode'},
+            {key: 'scanned', component: 'local_barcode'},
+            {key: 'student', component: 'local_barcode'},
+            {key: 'submitted', component: 'local_barcode'}
         ]);
-
         $.when(langStrings).done(function(localizedStrings) {
             strings = localizedStrings;
             createTable();
@@ -162,20 +161,20 @@ define(['jquery', 'core/str'], function($, str) {
                     code = response.faultString;
                     message = response.faultString;
                 } else {
-                    code = response.code;
-                    message = response.message;
-                    assignment = response.assignment;
+                    code           = response.code;
+                    message        = response.message;
+                    assignment     = response.assignment;
                     assignmentdescription = response.assignmentdescription;
-                    course = response.course;
-                    duedate = response.duedate;
-                    idformat = response.idformat;
-                    studentid = response.studentid;
-                    studentname = response.studentname;
+                    course         = response.course;
+                    duedate        = response.duedate;
+                    idformat       = response.idformat;
+                    studentid      = response.studentid;
+                    studentname    = response.studentname;
                     submissiontime = response.submissiontime;
-                    islate = response.islate;
-                    hasReverted = response.reverted;
+                    islate         = response.islate;
+                    hasReverted    = response.reverted;
 
-                    if (!getAllowMultipleScans()) {
+                    if (! getAllowMultipleScans()) {
                         resetRevert();
                         resetOnTime();
                     }
@@ -183,7 +182,7 @@ define(['jquery', 'core/str'], function($, str) {
                 feedback();
             },
             error: function(response) {
-                message = 'Error';
+                  message        = 'Error';
             },
             dataType: "json"
         });
@@ -220,7 +219,7 @@ define(['jquery', 'core/str'], function($, str) {
         }
 
         if (code !== 200) {
-            submitted = strings[6];
+            submitted  = strings[6];
             $('#feedback-group').removeClass('local-barcode-has-success');
             $('#feedback-group').removeClass('local-barcode-has-inform');
             $('#feedback-group').addClass('local-barcode-has-danger');
@@ -244,9 +243,9 @@ define(['jquery', 'core/str'], function($, str) {
         var thead = table.append('<thead></thead>');
         var header = thead.append('<tr></tr>');
         header.html('<th colspan="8" class="local-barcode-th-left local-barcode-sm-hide">' + strings[1] + ' - (<span id="id_count">' +
-            '0</span> ' + strings[6] + ')</th>' +
-            '<th colspan="17" class="local-barcode-th-center">' + strings[0] + '</th>' +
-            '<th colspan="5" class="local-barcode-th-right">' + strings[8] + '(<span id="id_submit_count">0</span>)</th>');
+                '0</span> ' + strings[6] + ')</th>' +
+                '<th colspan="17" class="local-barcode-th-center">' + strings[0] + '</th>' +
+                '<th colspan="5" class="local-barcode-th-right">' + strings[8] + '(<span id="id_submit_count">0</span>)</th>');
         table.append('<tbody id="tbody"></tbody>');
 
         main.append(table);
@@ -274,7 +273,7 @@ define(['jquery', 'core/str'], function($, str) {
             if (i === 0) {
                 cell.addClass('local-barcode-sm-hide');
             }
-            if (i === 2) {
+            if (i === 2)  {
                 cssClass += ' local-barcode-td-position';
                 span.addClass('local-barcode-visuallyhidden');
                 cell.addClass(cssClass);
@@ -300,7 +299,7 @@ define(['jquery', 'core/str'], function($, str) {
             '<small>' + course + '</small><br />' +
             '<small>' + strings[7] + ': ' + studentname + ' / ' + idformat + ': ' + studentid + '</small><br />' +
             '<small>' + strings[4] + ': ' + duedate + '&nbsp; ' + strings[6] + ': <span class="' +
-            submissionClass + '">' + submissiontime +
+                submissionClass + '">' + submissiontime +
             '</span></small><br />',
             submitted
         ];
@@ -348,7 +347,7 @@ define(['jquery', 'core/str'], function($, str) {
 
     function setOnTime() {
         if (document.getElementById('id_submitontime') &&
-            document.getElementById('id_submitontime').checked === true) {
+                document.getElementById('id_submitontime').checked === true) {
             ontime = '1';
         } else {
             ontime = '0';
@@ -377,9 +376,9 @@ define(['jquery', 'core/str'], function($, str) {
     function addCombinedCountElement() {
         $('#id_barcode').after(function() {
             return '<span class="local-barcode-combined-counts local-barcode-inform">(' +
-                '<span id="id_scanned_count">0</span> / ' +
-                '<span id="id_submitted_count">0</span>)' +
-                '</span>';
+                       '<span id="id_scanned_count">0</span> / ' +
+                       '<span id="id_submitted_count">0</span>)' +
+                    '</span>';
         });
     }
 
@@ -414,14 +413,14 @@ define(['jquery', 'core/str'], function($, str) {
 
     // Closure to calculate the total number of scanned barcodes
     // @return {counter}   Returns the number of times all barcodes have been scanned.
-    var totalScanned = (function() {
+    var totalScanned = (function () {
         var counter = 0;
         // Increment the counter.
         function increment() {
             counter += 1;
         }
         // Return the updated counter value.
-        return function() {
+        return function () {
             increment();
             return counter;
         };
@@ -438,7 +437,7 @@ define(['jquery', 'core/str'], function($, str) {
             counter += 1;
         }
         // Return the updated counter value.
-        return function() {
+        return function () {
             increment();
             return counter;
         };

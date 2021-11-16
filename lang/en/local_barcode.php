@@ -32,7 +32,7 @@ $string['assignmentdetails']       = 'Assignment details';
 $string['barcode']                 = 'Barcode';
 $string['barcodes']                = 'Barcodes';
 $string['barcodeempty']            = 'Barcode field was empty';
-$string['barcodeheading']          = 'Upload physical submisisons';
+$string['barcodeheading']          = 'Upload physical submissions';
 $string['barcodenotfound']         = 'Barcode not found';
 $string['barcodesameday']          = 'Barcode already scanned today';
 $string['catchall']                = 'Error 418: Something\'s gone wrong somewhere and we can\'t identify where. Sorry.';
@@ -46,20 +46,32 @@ $string['multiplescans_help']      = 'By selecting this option, selected checbox
                                      'multiple scans without the checkboxes resetting.';
 $string['navigationbreadcrumb']    = 'Physical submissions';
 $string['notsubmitted']            = 'Not submitted';
-$string['pageheading']             = 'Upload physical submisisons';
+$string['pageheading']             = 'Upload physical submissions';
 $string['pluginname']              = 'Barcode scanning';
 $string['privacy:metadata']        = 'The local barcode plugin only referecnes existing assignment & submission data already held in Moodle.';
 $string['requiredbarcode']         = 'At least 1 barcode is required.';
 $string['reverttodraft']           = 'Revert this submission back to draft';
-$string['reverttodraftemail']      = 'Your physical assignment has been reverted to draft, perhaps because it ' .
-                                     'has been handed back to you for further work. You will now need to re-submit ' .
-                                     'the assignment before the deadline. If you have any questions about this please ' .
-                                     'speak with your tutor. The link to the assignment in question can be found below: <br />' .
-                                     '<a href="{$a->linkurl}">{$a->linktext}</a>';
-$string['reverttodraftemailnonhtml'] = 'Your physical assignment, {$a->linktext} has been reverted to draft, perhaps because it ' .
-                                     'has been handed back to you for further work. You will now need to re-submit ' .
-                                     'the assignment before the deadline. If you have any questions about this please ' .
-                                     'speak with your tutor. The assignment can be viewed at {$a->linkurl}';
+
+// SU_AMEND START - Barcode: Updated email strings
+//$string['reverttodraftemail']      = 'Your physical assignment has been reverted to draft, perhaps because it ' .
+//                                     'has been handed back to you for further work. You will now need to re-submit ' .
+//                                     'the assignment before the deadline. If you have any questions about this please ' .
+//                                     'speak with your tutor. The link to the assignment in question can be found below: <br />' .
+//                                     '<a href="{$a->linkurl}">{$a->linktext}</a>';
+$string['reverttodraftemail']       = 'The physical assignment submission listed below was reverted to draft on {$a->timecreated}'.
+                                        '. You will now need to ensure it is resubmitted before the deadline. If you' .
+                                        ' have any questions about this assessment please speak with your tutor' .
+                                        '. The affected assessment is <a href="{$a->linkurl}">{$a->linktext}</a>';
+//$string['reverttodraftemailnonhtml'] = 'Your physical assignment, {$a->linktext} has been reverted to draft, perhaps because it ' .
+//                                     'has been handed back to you for further work. You will now need to re-submit ' .
+//                                     'the assignment before the deadline. If you have any questions about this please ' .
+//                                     'speak with your tutor. The assignment can be viewed at {$a->linkurl}';
+$string['reverttodraftemailnonhtml'] = 'The physical assignment submission listed below was reverted to draft on {$a->timecreated}'.
+                                        '. You will now need to ensure it is resubmitted before the deadline. If you' .
+                                        ' have any questions about this assessment please speak with your tutor' .
+                                        '. The affected assessment is <a href="{$a->linkurl}">{$a->linktext}</a>';
+// SU_AMEND END
+
 $string['reverttodraftemailsubject'] = 'Submission reverted to draft';
 $string['reverttodraftfromuser']   = '(System) Submission reverted to draft';
 $string['reverttodraftresponse']   = 'This submission has been reverted back to draft';

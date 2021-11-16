@@ -101,9 +101,12 @@ class barcode_submission_form extends moodleform {
 
         $mform->addHelpButton('multiplescans', 'multiplescans', 'local_barcode');
         $mform->setType('multiplescans', PARAM_ALPHANUM);
-        $mform->setDefault('multiplescans', $this->_customdata['multiplescans']);
+        //$mform->setDefault('multiplescans', $this->_customdata['multiplescans']);
+        $mform->setDefault('multiplescans', 1);
+        $mform->hardFreeze('multiplescans');
         $mform->addElement('html', '</div>');
         $mform->addElement('hidden', 'cmid', $this->_customdata['cmid']);
         $this->add_action_buttons(true, get_string('submit', 'local_barcode'));
+//         $this->add_action_buttons(true, 'submit');
     }
 }

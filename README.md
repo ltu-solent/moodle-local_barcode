@@ -2,7 +2,7 @@
 
 ### Introduction
 
-This plugin allows a user to scan barcodes that have been linked to an assignment submission. Once the student has printed off their coversheet from the physical assignment, they are able to hand their submission into a member of staff for submission. The barcode scanning interface allows the member of staff to either scan the submission barcode or manually enter the barcode and upload the submission which is then marked as submitted.
+This plugin allows a user to scan barcodes that have been linked to an assignment submission. Once the student has printed off their cover sheet from the physical assignment, they are able to hand their submission into a member of staff for submission. The barcode scanning interface allows the member of staff to either scan the submission barcode or manually enter the barcode and upload the submission which is then marked as submitted.
 
 In addition to submitting a physical submission, staff can also revert an already submitted assignment back to draft status.
 
