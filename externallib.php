@@ -26,7 +26,7 @@
 defined('MOODLE_INTERNAL') || die('Direct access to this script is forbidden.');
 
 require_once($CFG->dirroot . '/lib/externallib.php');
-require_once($CFG->dirroot . '/mod/assign/submission/physical/lib.php');
+// require_once($CFG->dirroot . '/mod/assign/submission/physical/lib.php');
 require_once($CFG->dirroot . '/lib/moodlelib.php');
 require_once($CFG->dirroot . '/local/barcode/classes/barcode_assign.php');
 require_once($CFG->dirroot . '/local/barcode/classes/task/email_group.php');
